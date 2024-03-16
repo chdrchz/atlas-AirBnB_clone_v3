@@ -8,7 +8,15 @@ import os
 app = Flask(__name__)
 app.register_blueprint(app_views)
 
-@app.teardown_appcontext('/', strict_slashes=False)
+# Hey Savs, I'm kind of confused about this decorator?
+# @app.teardown_appcontext('/', strict_slashes=False)
+# temp comment to see what the hecky becky is up
+#   Ok so looks like that may have been part of the issue.
+#   Now to figure out where everything else is sitting
+#   And I'm not really sure what's happening
+#   But at least it's running?
+#   -Ace
+@app.teardown_appcontext
 def teardown():
     storage.close()
 
