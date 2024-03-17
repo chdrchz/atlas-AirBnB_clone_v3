@@ -11,14 +11,14 @@ from models.state import State
 from models.user import User
 
 # Task info for Ace's future reference:
-#   create a route /status on the object app_views 
+#   create a route /status on the object app_views
 #   that returns a JSON: "status": "OK" (see example)
 # I do not understand what that means
 # Where do we make the object????
 # Why is the documentation not passing?????
 # I am confusion
 #
-# ACE --- This is Savs, the status:ok is just 
+# ACE --- This is Savs, the status:ok is just
 # a way for us to see that the status of the
 # api works properly, in json format
 
