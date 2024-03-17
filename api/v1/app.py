@@ -18,7 +18,7 @@ def teardown(exception):
 @app.errorhandler(404)
 def error_404(exception):
     """ return for 404 errors """
-    return jsonify({"error": "Not found"})
+    return jsonify({"error": "Not found"}), 404
 
 
 def start_flask():
