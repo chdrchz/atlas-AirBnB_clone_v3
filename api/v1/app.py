@@ -17,7 +17,7 @@ app.register_blueprint(app_views)
 #   But at least it's running?
 #   -Ace
 @app.teardown_appcontext
-def teardown():
+def teardown(exception):
     storage.close()
 
 if __name__ == "__main__":
