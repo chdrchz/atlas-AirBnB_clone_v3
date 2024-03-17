@@ -11,7 +11,7 @@ from models.state import State
 
 
 @app_views.route("/states", methods=['GET'], strict_slashes=False)
-def get_all_states(): 
+def get_all_states():
     """
     This method retrieves a list of all state objects
     Args: states_all - list of all states, keys excluded
