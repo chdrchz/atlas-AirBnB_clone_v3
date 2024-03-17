@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """This module defines a flask web app"""
 from api.v1.views import app_views
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 from os import getenv
 
@@ -13,6 +13,12 @@ app.register_blueprint(app_views)
 def teardown(exception):
     """This method handles the teardown, on itself"""
     storage.close()
+
+
+@app.errorhandler(404)
+def error_404():
+    """ return for 404 errors """
+    return jsonify({"error": "Not found"})
 
 
 def start_flask():
