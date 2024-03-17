@@ -15,7 +15,7 @@ def get_all_states():
     """
     This method retrieves a list of all state objects
     Args: states_all - list of all states, keys excluded
-          states_json - all states converted to a dictionary
+          states_json - all states converted to a list of dictionaries
     Return: a json dictionary containing all state objects
     """
     states_all = storage.all(State).values()
