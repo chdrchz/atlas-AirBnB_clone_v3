@@ -51,6 +51,7 @@ def delete_state(state_id):
     storage.delete(state)
     storage.save()
     return jsonify({}), 201 #OK
+    #^^^ not 200? -Ace
 
 
 @app_views.route("/states<state_id>", methods=['POST'], strict_slashes=False)
