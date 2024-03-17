@@ -10,7 +10,7 @@ app.register_blueprint(app_views)
 
 
 @app.teardown_appcontext
-def teardown(self):
+def teardown(exception):
     """This method handles the teardown, on itself"""
     storage.close()
 
