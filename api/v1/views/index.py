@@ -36,7 +36,7 @@ def get_stats():
     """returns counts of the different objects"""
     return_dict = {}
     for object in classes:
-        print({object})
-        object_dict = {object: storage.count(object)}
+        # print({object})
+        object_dict = {object: storage.count(classes[object])}
         return_dict.update(object_dict)
     return jsonify(return_dict)
