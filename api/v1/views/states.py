@@ -11,7 +11,7 @@ from models.state import State
 
 
 @app_views.route("/states", methods=['GET'], strict_slashes=False)
-def get_all_states(): 
+def get_all_states():
     """
     This method retrieves a list of all state objects
     Args: states_all - list of all states, keys excluded
@@ -58,13 +58,37 @@ def delete_state(state_id):
 def create_state(state_id):
     """
     This method creates a state object
-    Args: state - gets an HTTP body request to an object
+    Args: state - gets an HTTP body request to a state object
+    Return: a json dictionary containing one state object
     """
     if not request.get_json:
-        abort(400, "Not a JSON") #Bad request
+        abort(400, 'Not a JSON') #Bad request
     if 'name' not in request.get_json():
         abort(400, 'Missing name') #Bad request
     state = State(**request.get_json())
-    state_json = state.to_dict()
     state.save()
+    state_json = state.to_dict()
     return jsonify(state_json), 201 #OK
+
+
+@app_views.route("/states<state_id>", methods=['PUT'], strict_slashes=False)
+def update_state(state_id):
+    """
+    This method updates a state object
+    Args: state - retrieves one state object, based on its state id
+          json_data - json request data for readability
+          state_json - state object converted to a dictionary
+    Return:
+    """
+    state = storage.get(State, state_id)
+    json_data = request.get_json()
+    if not json_data:
+        abort(400, 'Not a JSON') #Bad request
+    if 'name' not in json_data:
+        abort(400, 'Missing name') #Bad request
+    for key, value in json_data.items():
+        if key not in ['id', 'created_at', 'updated_at']:
+            setattr(state, key, value)
+    state.save()
+    state_json = state.to_dict()
+    return jsonify(state_json)
