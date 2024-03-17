@@ -12,8 +12,9 @@ from flask import jsonify
 # I am confusion
 # ACE --- This is Savs, the status:ok is just 
 # a way for us to see that the status of the
-# route works properly, in json format
+# api works properly, in json format
 
 @app_views.route('/status', strict_slashes=False)
 def status():
+    """returns the status of the api"""
     return jsonify({"status": "OK"})
