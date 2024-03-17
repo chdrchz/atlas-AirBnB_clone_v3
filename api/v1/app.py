@@ -10,8 +10,10 @@ app.register_blueprint(app_views)
 
 
 @app.teardown_appcontext
-def teardown():
+def teardown(self):
+    """This method handles the teardown, on itself"""
     storage.close()
+
 
 def start_flask():
     """
@@ -21,6 +23,7 @@ def start_flask():
     app.run(host=getenv('HBNB_API_HOST', default='localhost'),
             port=getenv('HBNB_API_PORT'),
             threaded=True)
+
 
 if __name__ == "__main__":
     start_flask()
