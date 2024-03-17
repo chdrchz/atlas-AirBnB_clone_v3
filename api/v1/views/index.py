@@ -26,10 +26,12 @@ from models.user import User
 classes = {"amenities": Amenity, "cities": City,
            "places": Place, "reviews": Review, "states": State, "users": User}
 
+
 @app_views.route('/status', strict_slashes=False)
 def status():
     """returns the status of the api"""
     return jsonify({"status": "OK"})
+
 
 @app_views.route('/stats', strict_slashes=False, methods=['GET'])
 def get_stats():
