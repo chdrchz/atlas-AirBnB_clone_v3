@@ -4,7 +4,7 @@ This module creates the view for all state objects
 and handles all default api actions
 """
 
-from api.v1.views import app_views
+from api.v1.views import app_views, index
 from flask import Flask, abort, jsonify, request
 from models import storage
 from models.state import State
@@ -19,7 +19,8 @@ def get_all_states():
     Return: a json dictionary containing all state objects
     """
     states_all = storage.all(State).values()
-    states_json = [states_all.to_dict() for state in states_all]
+    # print(f"states_all type: {type(states_all)}")
+    states_json = [state.to_dict() for state in states_all]
     return jsonify(states_json)
 
 
