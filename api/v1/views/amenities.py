@@ -79,7 +79,7 @@ def update_amenity(amenity_id):
     Args: json_data - contains an HTTP body request to an amenity object
     Return:
     """
-    json_data = request.get_json()
+    json_data = request.get_json(silent=True)
     amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
         abort(404)
