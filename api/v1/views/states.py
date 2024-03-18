@@ -65,7 +65,7 @@ def create_state():
     Return: a json dictionary containing one state object
     """
     if not request.get_json:
-        abort(415, 'Not a JSON') #Bad request
+        abort(400, 'Not a JSON') #Bad request
     if 'name' not in request.get_json():
         abort(400, 'Missing name') #Bad request
     state = State(**request.get_json())
@@ -74,7 +74,7 @@ def create_state():
     return jsonify(state_json), 201 #OK
 
 
-@app_views.route("/states<state_id>", methods=['PUT'], strict_slashes=False)
+@app_views.route("/states/<state_id>", methods=['PUT'], strict_slashes=False)
 def update_state(state_id):
     """
     This method updates a state object
