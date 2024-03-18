@@ -64,12 +64,13 @@ def create_state():
     Args: state - gets an HTTP body request to a state object
     Return: a json dictionary containing one state object
     """
-    if not request.get_json:
+    json_data = request.get_json(silent=True)
+    if not json_data:
         print("here")
         abort(400, 'Not a JSON') #Bad request
-    if 'name' not in request.get_json():
+    if 'name' not in json_data:
         abort(400, 'Missing name') #Bad request
-    state = State(**request.get_json())
+    state = State(**json_data)
     state.save()
     state_json = state.to_dict()
     return jsonify(state_json), 201 #OK
