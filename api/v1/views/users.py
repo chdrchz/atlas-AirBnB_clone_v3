@@ -19,7 +19,7 @@ def get_all_users():
     Return: a json dictionary containing all user objects
     """
     users = storage.all(User).values()
-    users_json = [users.to_dict() for user in users]
+    users_json = [user.to_dict() for user in users]
     return jsonify(users_json)
 
 
@@ -38,7 +38,8 @@ def get_user(user_id):
     return jsonify(user_json)
 
 
-@app_views.route("/users/<users_id>", methods=['DELETE'], strict_slashes=False)
+@app_views.route(
+        "/users/<users_id>", methods=['DELETE'], strict_slashes=False)
 def delete_user(user_id):
     """
     This method deletes one user object
@@ -63,7 +64,7 @@ def create_user():
     """
     json_data = request.get_json(silent=True)
     if not json_data:
-        print("here")
+        # print("here")
         abort(400, 'Not a JSON') #Bad request
     if 'name' not in json_data:
         abort(400, 'Missing name') #Bad request
@@ -73,7 +74,8 @@ def create_user():
     return jsonify(user_json), 201 #OK
 
 
-@app_views.route("/users/<user_id>", methods=['PUT'], strict_slashes=False)
+@app_views.route(
+        "/users/<user_id>", methods=['PUT'], strict_slashes=False)
 def update_user(user_id):
     """
     This method updates a user object
