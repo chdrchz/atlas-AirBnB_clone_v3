@@ -16,13 +16,17 @@ def get_cities(state_id):
     """
     This method retrieves a list of all cities in one state
     Args: cities - contains a list all cities in one state
+          state - contains one state object
     Return: a list dictionaries with cities and 
     """
-    cities = storage.get_all(City, {"state_id": state_id})
-    if not cities:
+    state = storage.get(State, state_id)
+    if not state:
         abort(404)
-    cities_json = [city.to_dict() for city in cities]
-    return jsonify(cities_json)
+    cities = state.cities
+    cities_list = []
+    for city in cities:
+        cities_list.append(city.to_dict())
+    return jsonify(cities_list)
 
 
 @app_views.route("/cities/<city_id>", methods=['GET'], strict_slashes=False)
