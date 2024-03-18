@@ -69,13 +69,18 @@ def create_city(state_id):
           city_json - holds the dictionary representation of city
     Return:
     """
+    state = storage.get(State, state_id)
     json_data = request.get_json(silent=True)
     if not json_data:
         print("here")
         abort(400, 'Not a JSON') #Bad request
     if 'name' not in json_data:
         abort(400, 'Missing name') #Bad request
+    if not state:
+        abort(404)
+    
     city = City(**json_data)
+    setattr(city, 'state_id', state_id)
     city.save()
     city_json = city.to_dict()
     return jsonify(city_json), 201 #OK
