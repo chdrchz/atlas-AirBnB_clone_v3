@@ -44,7 +44,7 @@ def get_city(city_id):
     return jsonify(city_json)
 
 
-@app_views.route("/cities/<city_id>", methods=['GET'], strict_slashes=False)
+@app_views.route("/cities/<city_id>", methods=['DELETE'], strict_slashes=False)
 def delete_city(city_id):
     """
     This method deletes a city object
