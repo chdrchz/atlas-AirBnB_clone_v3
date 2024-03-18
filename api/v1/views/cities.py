@@ -11,13 +11,13 @@ from models.city import City
 from models.state import State
 
 
-@app_views.route("/states/<state_id>/cities", methods=['GET'], strict_slashes=False)
+@app_views.route("/states/<state_id>/cities", methods=["GET"], strict_slashes=False)
 def get_cities(state_id):
     """
     This method retrieves a list of all cities in one state
     Args: cities - contains a list all cities in one state
           state - contains one state object
-    Return: a list dictionaries with cities and 
+    Return: a list dictionaries with cities and
     """
     state = storage.get(State, state_id)
     if not state:
@@ -29,7 +29,7 @@ def get_cities(state_id):
     return jsonify(cities_list)
 
 
-@app_views.route("/cities/<city_id>", methods=['GET'], strict_slashes=False)
+@app_views.route("/cities/<city_id>", methods=["GET"], strict_slashes=False)
 def get_city(city_id):
     """
     This method retrieves one city object
@@ -38,13 +38,13 @@ def get_city(city_id):
     Return: a json dictionary containing one city object
     """
     city = storage.get(City, city_id)
-    if not city: 
-        abort(404) #Bad request
+    if not city:
+        abort(404)  # Bad request
     city_json = city.to_dict()
     return jsonify(city_json)
 
 
-@app_views.route("/cities/<city_id>", methods=['DELETE'], strict_slashes=False)
+@app_views.route("/cities/<city_id>", methods=["DELETE"], strict_slashes=False)
 def delete_city(city_id):
     """
     This method deletes a city object
@@ -52,14 +52,14 @@ def delete_city(city_id):
     Return: an empty dictionary
     """
     city = storage.get(City, city_id)
-    if not city: 
-        abort(404) #Bad request
+    if not city:
+        abort(404)  # Bad request
     storage.delete(city)
     storage.save()
-    return jsonify({}), 200 #OK
+    return jsonify({}), 200  # OK
 
 
-@app_views.route("/states/<state_id>/cities", methods=['POST'], strict_slashes=False)
+@app_views.route("/states/<state_id>/cities", methods=["POST"], strict_slashes=False)
 def create_city(state_id):
     """
     This method creates a city object
@@ -73,17 +73,17 @@ def create_city(state_id):
     json_data = request.get_json(silent=True)
     if not json_data:
         print("here")
-        abort(400, 'Not a JSON') #Bad request
-    if 'name' not in json_data:
-        abort(400, 'Missing name') #Bad request
+        abort(400, "Not a JSON")  # Bad request
+    if "name" not in json_data:
+        abort(400, "Missing name")  # Bad request
     if not state:
         abort(404)
-    
+
     city = City(**json_data)
-    setattr(city, 'state_id', state_id)
+    setattr(city, "state_id", state_id)
     city.save()
     city_json = city.to_dict()
-    return jsonify(city_json), 201 #OK
+    return jsonify(city_json), 201  # OK
 
 
 @app_views.route("/cities/<city_id>", methods=["PUT"], strict_slashes=False)
