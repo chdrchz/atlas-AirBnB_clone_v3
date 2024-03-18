@@ -61,17 +61,21 @@ def create_user():
     This method creates a user object
     Args: user - gets an HTTP body request to a user object
           json_data - holds the json data request
-    Return: a json dictionary containing one state object
+          user_json - holds the dictionary of a user object
+    Return: a json dictionary containing one user object
     """
     json_data = request.get_json(silent=True)
     if not json_data:
-        abort(400, 'Not a JSON') #Bad request
-    if 'name' not in json_data:
-        abort(400, 'Missing name') #Bad request
+        abort(400, 'Not a JSON')
+    if 'email' not in json_data:
+        abort(400, 'Missing email')
+    if 'password' not in json_data:
+        abort(400, 'Missing password')
     user = User(**json_data)
-    user.save()
+    storage.new(user)
+    storage.save()
     user_json = user.to_dict()
-    return jsonify(user_json), 201 #OK
+    return jsonify(user_json), 201
 
 
 @app_views.route(
@@ -81,22 +85,20 @@ def update_user(user_id):
     This method updates a user object
     Args: user - retrieves one user object, based on its user id
           json_data - json request data for readability
-          new_user - exists to store the unpacked request
           user_json - user object converted to a dictionary
     Return: a json dictionary
     """
     user = storage.get(User, user_id)
     json_data = request.get_json()
-    if json_data is None:
-            abort(400, description="Not a JSON")
-    if 'email' not in json_data:
-        abort(400, description="Missing email")
-    if 'password' not in json_data:
-        abort(400, description="Missing password")
+    if not user:
+        abort(404) #Bad request
+    if not json_data:
+        abort(400, 'Not a JSON') #Bad request
+    if 'name' not in json_data:
+        abort(400, 'Missing name') #Bad request
     for key, value in json_data.items():
         if key not in ['id', 'created_at', 'updated_at']:
             setattr(user, key, value)
-    new_user = User(**json_data)
-    new_user.save()
-    user_json = new_user.to_dict()
+    user.save()
+    user_json = user.to_dict()
     return jsonify(user_json)
