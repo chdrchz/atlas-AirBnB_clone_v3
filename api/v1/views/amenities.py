@@ -50,7 +50,7 @@ def delete_amenity(amenity_id):
         abort(404) #Bad request
     storage.delete(amenity)
     storage.save()
-    return jsonify({}), 200 #OK
+    return jsonify({}), 201 #OK
 
 @app_views.route('/amenities', methods=['POST'], strict_slashes=False)
 def create_amenity():
@@ -69,7 +69,7 @@ def create_amenity():
     amenity = Amenity(**json_data)
     amenity.save()
     amenity_json = amenity.to_dict()
-    return jsonify(amenity_json)
+    return jsonify(amenity_json), 201
 
 
 @app_views.route('/amenities/<amenity_id>', methods=['PUT'], strict_slashes=False)
