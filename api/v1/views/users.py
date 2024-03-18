@@ -38,8 +38,8 @@ def get_user(user_id):
     return jsonify(user_json)
 
 
-@app_views.route(
-        "/users/<user_id>", methods=['DELETE'], strict_slashes=False)
+@app_views.route("/users/<user_id>", methods=['DELETE'],
+                 strict_slashes=False)
 def delete_user(user_id):
     """
     This method deletes one user object
@@ -78,8 +78,8 @@ def create_user():
     return jsonify(user_json), 201
 
 
-@app_views.route(
-        "/users/<user_id>", methods=['PUT'], strict_slashes=False)
+@app_views.route("/users/<user_id>", methods=['PUT'],
+                 strict_slashes=False)
 def update_user(user_id):
     """
     This method updates a user object
@@ -97,8 +97,8 @@ def update_user(user_id):
     if 'name' not in json_data:
         abort(400, 'Missing name') #Bad request
     for key, value in json_data.items():
-        if key not in ['id', 'created_at', 'updated_at']:
-            setattr(user, key, value)
-    user.save()
+        if key not in ['id', 'created_at', 'updated_at', 'email']:
+                setattr(user[0], key, value)
+    storage.save()
     user_json = user.to_dict()
     return jsonify(user_json)
