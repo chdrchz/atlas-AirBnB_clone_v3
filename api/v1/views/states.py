@@ -67,7 +67,7 @@ def create_state():
     """
     json_data = request.get_json(silent=True)
     if not json_data:
-        print("here")
+        # print("here")
         abort(400, 'Not a JSON') #Bad request
     if 'name' not in json_data:
         abort(400, 'Missing name') #Bad request
@@ -87,7 +87,7 @@ def update_state(state_id):
     Return:
     """
     state = storage.get(State, state_id)
-    json_data = request.get_json()
+    json_data = request.get_json(silent=True)
     if not state:
         abort(404) #Bad request
     if not json_data:
