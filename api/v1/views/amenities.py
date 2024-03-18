@@ -17,8 +17,8 @@ def get_amenities():
     Args: amenities - holds all amenity objects, keys excluded
     Return: json representation of dictionary
     """
-    amenities = storage.all(Amenity).values()
-    for amenity in amenities:
+    amenities = []
+    for amenity in storage.all(Amenity).values():
         amenities.append(amenity.to_dict())
     return jsonify(amenities)
 
@@ -32,7 +32,7 @@ def get_amenity(amenity_id):
     Return: json representation of dictionary
     """
     amenity = storage.get(Amenity, amenity_id)
-    if not amenity: 
+    if not amenity:
         abort(404) #Bad request
     amenity_json = amenity.to_dict()
     return jsonify(amenity_json)
