@@ -65,7 +65,7 @@ def create_state():
     Return: a json dictionary containing one state object
     """
     if not request.get_json:
-        abort(400, 'Not a JSON') #Bad request
+        abort(415, 'Not a JSON') #Bad request
     if 'name' not in request.get_json():
         abort(400, 'Missing name') #Bad request
     state = State(**request.get_json())
