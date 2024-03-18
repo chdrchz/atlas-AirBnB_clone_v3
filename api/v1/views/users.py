@@ -39,17 +39,21 @@ def get_user(user_id):
 
 
 @app_views.route(
-        "/users/<users_id>", methods=['DELETE'], strict_slashes=False)
+        "/users/<user_id>", methods=['DELETE'], strict_slashes=False)
 def delete_user(user_id):
     """
     This method deletes one user object
     Args: user - retrieves one user object, based on its user id
     Return: an empty json dictionary
     """
+    # print("here")
     user = storage.get(User, user_id)
     if user is None:
         abort(404) #Bad request
     storage.delete(user)
+    print(f"type of user: {type(user)}")
+    # for key, value in user.items:
+    #     print(f"key: {key}, user: {value}")
     storage.save()
     return jsonify({}), 200 #OK
 
