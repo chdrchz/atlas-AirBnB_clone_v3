@@ -91,14 +91,13 @@ def update_user(user_id):
     user = storage.get(User, user_id)
     if not user:
         abort(404) #Bad request
-    json_data = request.get_json(Silent=True)
+    json_data = request.get_json(silent=True)
     if not json_data:
         abort(400, 'Not a JSON') #Bad request
-    if 'name' not in json_data:
-        abort(400, 'Missing name') #Bad request
+    leave_out_keys = ['id', 'email', 'created_at', 'updated_at']
     for key, value in json_data.items():
-        if key not in ['id', 'created_at', 'updated_at', 'email']:
-                setattr(user, key, value)
+        if key not in leave_out_keys:
+            setattr(user, key, value)
     storage.save()
     user_json = user.to_dict()
     return jsonify(user_json), 200 #OK
