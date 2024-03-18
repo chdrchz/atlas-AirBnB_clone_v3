@@ -91,7 +91,7 @@ def update_user(user_id):
     user = storage.get(User, user_id)
     if not user:
         abort(404) #Bad request
-    json_data = request.get_json()
+    json_data = request.get_json(Silent=True)
     if not json_data:
         abort(400, 'Not a JSON') #Bad request
     if 'name' not in json_data:
