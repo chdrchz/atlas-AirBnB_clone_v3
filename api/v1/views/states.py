@@ -39,13 +39,14 @@ def get_state(state_id):
     return jsonify(state_json)
 
 
-@app_views.route("/states<state_id>", methods=['DELETE'], strict_slashes=False)
+@app_views.route("/states/<state_id>", methods=['DELETE'], strict_slashes=False)
 def delete_state(state_id):
     """
     This method deletes one state object
     Args: state - retrieves one state object, based on its state id
     Return: an empty json dictionary
     """
+    # print("here")
     state = storage.get(State, state_id)
     if state is None:
         abort(404) #Bad request
