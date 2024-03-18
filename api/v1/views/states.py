@@ -55,8 +55,8 @@ def delete_state(state_id):
     #^^^ not 200? -Ace
 
 
-@app_views.route("/states<state_id>", methods=['POST'], strict_slashes=False)
-def create_state(state_id):
+@app_views.route("/states", methods=['POST'], strict_slashes=False)
+def create_state():
     """
     This method creates a state object
     Args: state - gets an HTTP body request to a state object
