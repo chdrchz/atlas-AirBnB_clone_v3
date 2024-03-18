@@ -95,7 +95,7 @@ def update_city(city_id):
           city_json - holds the dictionary representation
     Return:
     """
-    json_data = request.get_json()
+    json_data = request.get_json(silent=True)
     city = storage.get(City, city_id)
     if not city:
         abort(404)
