@@ -90,4 +90,4 @@ def update_amenity(amenity_id):
             setattr(amenity, key, value)
     storage.save()
     amenity_json = amenity.to_dict()
-    return jsonify(amenity_json)
+    return jsonify(amenity_json), 200
