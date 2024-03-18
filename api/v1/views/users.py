@@ -46,14 +46,11 @@ def delete_user(user_id):
     Args: user - retrieves one user object, based on its user id
     Return: an empty json dictionary
     """
-    # print("here")
     user = storage.get(User, user_id)
     if user is None:
         abort(404) #Bad request
     storage.delete(user)
     print(f"type of user: {type(user)}")
-    # for key, value in user.items:
-    #     print(f"key: {key}, user: {value}")
     storage.save()
     return jsonify({}), 200 #OK
 
@@ -68,7 +65,6 @@ def create_user():
     """
     json_data = request.get_json(silent=True)
     if not json_data:
-        # print("here")
         abort(400, 'Not a JSON') #Bad request
     if 'name' not in json_data:
         abort(400, 'Missing name') #Bad request
@@ -85,20 +81,22 @@ def update_user(user_id):
     This method updates a user object
     Args: user - retrieves one user object, based on its user id
           json_data - json request data for readability
+          new_user - exists to store the unpacked request
           user_json - user object converted to a dictionary
     Return: a json dictionary
     """
     user = storage.get(User, user_id)
     json_data = request.get_json()
-    if not user:
-        abort(404) #Bad request
-    if not json_data:
-        abort(400, 'Not a JSON') #Bad request
-    if 'name' not in json_data:
-        abort(400, 'Missing name') #Bad request
+    if json_data is None:
+            abort(400, description="Not a JSON")
+    if 'email' not in json_data:
+        abort(400, description="Missing email")
+    if 'password' not in json_data:
+        abort(400, description="Missing password")
     for key, value in json_data.items():
         if key not in ['id', 'created_at', 'updated_at']:
             setattr(user, key, value)
-    user.save()
-    user_json = user.to_dict()
+    new_user = User(**json_data)
+    new_user.save()
+    user_json = new_user.to_dict()
     return jsonify(user_json)
