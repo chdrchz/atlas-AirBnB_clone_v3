@@ -57,3 +57,48 @@ def delete_city(city_id):
     storage.delete(city)
     storage.save()
     return jsonify({}), 200 #OK
+
+
+@app_views.route("/states/<state_id>/cities", methods=['POST'], strict_slashes=False)
+def create_city(state_id):
+    """
+    This method creates a city object
+    Args: state - contains a state object
+          city - contains an HTTP body request to a city object
+          json_data - holds the json data request
+          city_json - holds the dictionary representation of city
+    Return:
+    """
+    json_data = request.get_json(silent=True)
+    if not json_data:
+        print("here")
+        abort(400, 'Not a JSON') #Bad request
+    if 'name' not in json_data:
+        abort(400, 'Missing name') #Bad request
+    city = City(**json_data)
+    city.save()
+    city_json = city.to_dict()
+    return jsonify(city_json), 201 #OK
+
+
+@app_views.route("/cities/<city_id>", methods=["PUT"], strict_slashes=False)
+def update_city(city_id):
+    """
+    This method updates a city object
+    Args: json_data - holds the json data request
+          city - contains one city object
+          city_json - holds the dictionary representation
+    Return:
+    """
+    json_data = request.get_json()
+    city = storage.get(City, city_id)
+    if not city:
+        abort(404)
+    if not json_data:
+        abort(400, "Not a JSON")
+    for key, value in json_data.items():
+        if key not in ["id", "state_id", "created_at", "updated_at"]:
+            setattr(city, key, value)
+    storage.save()
+    city_json = city.to_dict()
+    return jsonify(city_json)
