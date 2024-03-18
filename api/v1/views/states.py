@@ -87,6 +87,8 @@ def update_state(state_id):
     """
     state = storage.get(State, state_id)
     json_data = request.get_json()
+    if not state:
+        abort(404) #Bad request
     if not json_data:
         abort(400, 'Not a JSON') #Bad request
     if 'name' not in json_data:
