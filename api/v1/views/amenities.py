@@ -50,7 +50,7 @@ def delete_amenity(amenity_id):
         abort(404) #Bad request
     storage.delete(amenity)
     storage.save()
-    return jsonify({}), 201 #OK
+    return jsonify({}), 200 #OK
 
 @app_views.route('/amenities', methods=['POST'], strict_slashes=False)
 def create_amenity():
