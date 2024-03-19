@@ -12,7 +12,7 @@ from models.city import City
 from models.user import User
 
 
-@app_views.route("/cities/<city_id>/places", methods=["GET"], 
+@app_views.route("/cities/<city_id>/places", methods=["GET"],
                  strict_slashes=False)
 def get_places(city_id):
     """
@@ -101,7 +101,7 @@ def update_place(place_id):
     Args: json_data - holds the json data request
           place - contains one place object
           place_json - holds the dictionary representation
-    Return: 
+    Return:
     """
     json_data = request.get_json(silent=True)
     place = storage.get(Place, place_id)
