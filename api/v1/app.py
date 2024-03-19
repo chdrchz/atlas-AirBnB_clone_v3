@@ -30,7 +30,7 @@ def start_flask():
     """
     app.run(host=getenv('HBNB_API_HOST', default='localhost'),
             port=getenv('HBNB_API_PORT'),
-            threaded=True)
+            threaded=True, debug=True)
 
 
 if __name__ == "__main__":

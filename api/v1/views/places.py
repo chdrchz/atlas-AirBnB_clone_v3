@@ -13,15 +13,39 @@ from models import storage
 
 @app_views.route("/cities/<city_id>/places", methods=['GET'],
                  strict_slashes=False)
-def place_all(city_id=None):
+# def place_all(city_id=None):
+def place_all(city_id):
     """Returns all places or a place by specific ID"""
+
     if city_id:
         city = storage.get(City, city_id)
+        print(f"{city}")
         if city is not None:
             placeList = [place.to_dict() for place in city.places]
+            print(f"return print: {placeList}")
             return jsonify(placeList)
         else:
+            print("here")
             return abort(404)
+
+    # print("here")
+    # city = storage.get(City, city_id)
+    # if not city:
+    #     abort(404)
+    # places = city.places
+    # if not places:
+    #     abort(404)
+    # places_list = []
+    # for place in places:
+    #     places_list.append(place.to_dict())
+    # return jsonify(places_list)
+
+    # city = storage.get(City, city_id)
+    # if not city:
+    #     abort(404)
+    # return jsonify([place.to_dict() for place in city.places])
+
+
 
 
 @app_views.route("/places/<place_id>", methods=['GET'],
