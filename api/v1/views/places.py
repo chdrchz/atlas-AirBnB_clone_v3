@@ -14,7 +14,7 @@ from models.user import User
 
 @app_views.route("/cities/<city_id>/places", methods=["GET"],
                  strict_slashes=False)
-def get_places(city_id):
+def get_places(city_id=None):
     """
     This method retrieves a list of all places in one city
     Args: city - contains a city object
