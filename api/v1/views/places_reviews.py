@@ -13,7 +13,7 @@ from models.place import Place
 
 @app_views.route("/places/<place_id>/reviews", methods=["GET"],
                  strict_slashes=False)
-def get_reviews(place_id):
+def get_all_reviews(place_id):
     """
     This method retrieves a list of all reviews for a place
     Args: place - contains a place object
@@ -29,3 +29,18 @@ def get_reviews(place_id):
     for review in reviews:
         reviews_list.append(review.to_dict())
     return jsonify(reviews_list)
+
+
+@app_views.route("/reviews/<review_id>", methods=["GET"], strict_slashes=False)
+def get_reviews(review_id):
+    """
+    This method retrieves a review
+    Args: review - contains one review object, based on its id
+          reviews_json - dictionary holding review
+    Return: dictionary holding review in json format
+    """
+    review = storage.get(Review, review_id)
+    if not review:
+        abort(404)
+    review_json = review.to_dict()
+    return jsonify(review_json)
