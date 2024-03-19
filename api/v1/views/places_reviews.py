@@ -20,7 +20,7 @@ def get_reviews(place_id):
     """
     place = storage.get(Place, place_id)
     if not place:
-        abort(404) # Bad request
+        abort(404)
     reviews = place.reviews
     reviews_list = []
     for review in reviews:
