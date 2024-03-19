@@ -22,8 +22,12 @@ def get_places(city_id):
     """
     city = storage.get(City, city_id)
     if not city:
-        abort(404) # Bad request
-    return jsonify([place.to_dict() for place in city.places])
+        abort(404)
+    places = city.places
+    places_list = []
+    for place in places:
+        places_list.append(place.to_dict())
+    return jsonify(places_list)
 
 
 @app_views.route("/places/<place_id>", methods=["GET"],
