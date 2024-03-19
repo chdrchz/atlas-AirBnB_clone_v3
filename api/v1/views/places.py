@@ -14,20 +14,17 @@ from models.user import User
 
 @app_views.route("/cities/<city_id>/places", methods=["GET"],
                  strict_slashes=False)
-def get_places(city_id=None):
+def get_places(city_id):
     """
     This method retrieves a list of all places in one city
     Args: city - contains a city object
           places - contains all place objects in one city
     Return: a list of dictionaries containing places
     """
-    if city_id:
-        city = storage.get(City, city_id)
-        if city is not None:
-            places = [place.to_dict() for place in city.places]
-            return jsonify(places)
-        else:
-            return abort(404)
+    city = storage.get(City, city_id)
+    if not city:
+        abort(404) # Bad request
+    return jsonify([place.to_dict() for place in city.places])
 
 
 @app_views.route("/places/<place_id>", methods=["GET"],
