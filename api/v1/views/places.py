@@ -25,6 +25,8 @@ def get_places(city_id):
     if not city:
         abort(404)
     places = [place.to_dict() for place in city.places]
+    if not places:
+        return jsonify([])
     return jsonify(places)
 
 
