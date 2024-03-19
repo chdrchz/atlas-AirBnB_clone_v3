@@ -11,11 +11,14 @@ from models.review import Review
 from models.place import Place
 
 
-@app_views.route('/places/<place_id>/reviews', methods=['GET'], strict_slashes=False)
+@app_views.route("/places/<place_id>/reviews", methods=["GET"],
+                 strict_slashes=False)
 def get_reviews(place_id):
     """
     This method retrieves a list of all reviews for a place
     Args: place - contains a place object
+          reviews - holds reviews from a place
+          reviews_list - dictionary of reviews linked to a place
     Return: a list of dictionaries containing reviews
     """
     place = storage.get(Place, place_id)
