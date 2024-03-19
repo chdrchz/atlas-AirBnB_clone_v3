@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-This module creates the view for all city objects
+This module creates the view for all places objects
 and handles all default api actions
 """
 
