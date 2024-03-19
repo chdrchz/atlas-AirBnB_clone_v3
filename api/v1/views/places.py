@@ -12,13 +12,12 @@ from models.city import City
 from models.user import User
 
 
-@app_views.route("/cities/<city_id>/places", methods=["GET"],
+@app_views.route("/cities/<city_id>/places", methods=["GET"], 
                  strict_slashes=False)
 def get_places(city_id):
     """
     This method retrieves a list of all places in one city
     Args: city - contains a city object
-          places - contains all place objects in one city
     Return: a list of dictionaries containing places
     """
     city = storage.get(City, city_id)
